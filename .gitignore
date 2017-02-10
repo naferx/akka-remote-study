@@ -29,3 +29,5 @@ project/target/
 *.ear
 
 hs_err_pid*
+.ensime_cache/
+.ensime

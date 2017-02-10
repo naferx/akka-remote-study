@@ -4,7 +4,7 @@ version := "1.0"
 
 scalaVersion := "2.11.8"
 
-val akkaVersion = "2.4.14"
+val akkaVersion = "2.4.16"
 
 libraryDependencies ++= Seq(
   // akka
@@ -15,7 +15,7 @@ libraryDependencies ++= Seq(
   // utils
   "ch.qos.logback"       %    "logback-classic"     %   "1.1.7",
 
-  "org.scalatest"        %%   "scalatest"           %   "3.0.0"
+  "org.scalatest"        %%   "scalatest"           %   "3.0.0" % "test"
 )
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
