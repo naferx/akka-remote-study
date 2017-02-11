@@ -2,6 +2,7 @@
 package com.github.naferx
 
 import akka.actor._
+import akka.routing.FromConfig
 import com.typesafe.config.ConfigFactory
 
 
@@ -11,12 +12,15 @@ object Local extends App {
   val localActor = system.actorOf(Props[LocalActor], name = "LocalActor")  // the local actor
   localActor ! "START"                                                     // start the action
 
+  val localActor2 = system.actorOf(Props[LocalActor])  // the local actor
+
+
 }
 
 class LocalActor extends Actor {
 
-  //val remote = context.actorSelection("akka.tcp://HelloRemoteSystem@127.0.0.1:5150/user/RemoteActor")
-  val remote = context.actorSelection("akka.tcp://HelloRemoteSystem@192.168.1.52:5150/user/RemoteActor")
+  //val remote = context.actorSelection("akka.tcp://remoteSystem@192.168.1.52:5150/user/RemoteActor")
+  val remote = context.actorOf(FromConfig.props(Props[RemoteActor]), "remoteManager")
   var counter = 0
 
   def receive = {

@@ -5,9 +5,11 @@ import com.typesafe.config.ConfigFactory
 
 object HelloRemote extends App  {
   val config = ConfigFactory.load("hello-remote")
-  val system = ActorSystem("HelloRemoteSystem", config)
-  val remoteActor = system.actorOf(Props[RemoteActor], name = "RemoteActor")
-  remoteActor ! "The RemoteActor is alive"
+  val system = ActorSystem("remoteSystem", config)
+  //val remoteActor = system.actorOf(Props[RemoteActor], name = "remoteManager")
+  //remoteActor ! "The RemoteActor is alive"
+
+
 }
 
 class RemoteActor extends Actor {
