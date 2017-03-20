@@ -1,5 +1,5 @@
 
-package com.github.naferx
+package local
 
 import akka.actor._
 import akka.routing.FromConfig

@@ -15,6 +15,7 @@ object HelloRemote extends App  {
 class RemoteActor extends Actor {
   def receive = {
     case msg: String =>
+      val seq = Seq(1, 2, 3)
         println(s"RemoteActor received message '$msg'")
         sender ! "Hello from the RemoteActor"
   }
