@@ -1,10 +1,10 @@
 
-package local
+package com.github.naferx.local
 
 import akka.actor._
 import akka.routing.FromConfig
 import com.typesafe.config.ConfigFactory
-
+import com.github.naferx.remote.RemoteActor
 
 object Local extends App {
   val config = ConfigFactory.load("local")

@@ -1,10 +1,10 @@
-package com.github.naferx
+package com.github.naferx.remote
 
 import akka.actor._
 import com.typesafe.config.ConfigFactory
 
 object HelloRemote extends App  {
-  val config = ConfigFactory.load("hello-remote")
+  val config = ConfigFactory.load("remote")
   val system = ActorSystem("remoteSystem", config)
   //val remoteActor = system.actorOf(Props[RemoteActor], name = "remoteManager")
   //remoteActor ! "The RemoteActor is alive"

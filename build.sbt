@@ -1,6 +1,7 @@
 import sbt._
 import sbt.Keys._
 
+name := "sbt-study"
 
 val akkaVersion = "2.4.16"
 
@@ -17,25 +18,24 @@ lazy val dependencies = Seq(
 )
 
 lazy val commonSettings = Seq(
-  name := "akka-remote-study",
+  organization := "com.github.naferx",
   version := "1.0",
-  scalaVersion := "2.11.8",
-  //resolvers := allResolvers,
-  libraryDependencies := dependencies
+  scalaVersion := "2.11.8"
 )
 
-lazy val remote = (project in file("remote")).
-  settings(commonSettings: _*)
+lazy val root = (project in file(".")).
+  aggregate(remote, local)
 
+lazy val remote = (project in file("remote")).
+  settings(commonSettings: _*).
+  settings(
+    libraryDependencies ++= dependencies
+  )
 
 lazy val local = (project in file("local")).
-  settings(commonSettings: _*)
-  .dependsOn(remote)
-
-
-lazy val root = (project in file("."))
-  .settings(commonSettings.settings: _*)
-  .aggregate(remote, local)
-  .dependsOn(remote, local)
-
-scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
+  settings(commonSettings: _*).
+  settings(
+    libraryDependencies ++= dependencies
+  ).
+  aggregate(remote).
+  dependsOn(remote)
