@@ -24,18 +24,24 @@ lazy val commonSettings = Seq(
 )
 
 lazy val root = (project in file(".")).
-  aggregate(remote, local)
+  aggregate(common, remote, local)
+
+lazy val common = (project in file("common")).
+  settings(commonSettings: _*).
+  settings(
+    libraryDependencies ++= dependencies
+)
 
 lazy val remote = (project in file("remote")).
   settings(commonSettings: _*).
   settings(
     libraryDependencies ++= dependencies
-  )
+  ).
+  dependsOn(common)
 
 lazy val local = (project in file("local")).
   settings(commonSettings: _*).
   settings(
     libraryDependencies ++= dependencies
   ).
-  aggregate(remote).
-  dependsOn(remote)
+  dependsOn(common, remote)

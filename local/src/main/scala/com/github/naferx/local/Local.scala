@@ -6,8 +6,13 @@ import akka.routing.FromConfig
 import com.typesafe.config.ConfigFactory
 import com.github.naferx.remote.RemoteActor
 
+import com.github.naferx.messages.Messages._
+import com.github.naferx.configuration.CommonConfig
+
 object Local extends App {
-  val config = ConfigFactory.load("local")
+
+  val commonConfig = CommonConfig.defaultConfig
+  val config = ConfigFactory.load("local").withFallback(commonConfig).resolve()
   implicit val system = ActorSystem("LocalSystem", config)
   val localActor = system.actorOf(Props[LocalActor], name = "LocalActor")  // the local actor
   localActor ! "START"                                                     // start the action
@@ -25,11 +30,11 @@ class LocalActor extends Actor {
 
   def receive = {
     case "START" =>
-        remote ! "Hello from the LocalActor"
-    case msg: String =>
+        remote ! Greeting("Hello from the LocalActor")
+    case Greeting(msg) =>
         println(s"LocalActor received message: '$msg'")
         if (counter < 5) {
-            sender ! "Hello back to you"
+            sender ! Greeting("Hello back to you")
             counter += 1
         }
   }
