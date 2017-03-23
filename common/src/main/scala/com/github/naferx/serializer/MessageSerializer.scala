@@ -1,32 +1,45 @@
 
 package com.github.naferx.serializer
 
+import java.io.NotSerializableException
+
+import akka.actor.ExtendedActorSystem
+import akka.event.Logging
 import akka.serialization.SerializerWithStringManifest
 import com.github.naferx.messages.Messages
 import com.github.naferx.messages.GreetingMessage
 
-final class MessageSerializer extends SerializerWithStringManifest {
+final class MessageSerializer(actorSystem: ExtendedActorSystem) extends SerializerWithStringManifest {
   import Messages._
 
-  private val GreetingManifest = classOf[Greeting].getName
+  private val logger = Logging.getLogger(actorSystem, this)
 
-  def identifier: Int = 2587
+  private val GreetingManifest = "G"
 
-  def manifest(o: AnyRef): String = o.getClass.getName
+  override def identifier: Int = 2587
 
-
-  def toBinary(o: AnyRef): Array[Byte] = o match {
-    case g: Greeting => GreetingMessage(g.message).toByteArray
-    case _ => throw new IllegalArgumentException(s"Unable to serialize to bytes, clazz was: ${o.getClass}!")
+  override def manifest(obj: AnyRef): String = obj match {
+    case _: Greeting ⇒ GreetingManifest
+    case _ ⇒
+      throw new IllegalArgumentException(s"Can't serialize object of type ${obj.getClass} in [${getClass.getName}]")
   }
 
-  def fromBinary(bytes: Array[Byte], manifest: String): AnyRef = {
+  override def toBinary(obj: AnyRef): Array[Byte] = obj match {
+    case g: Greeting ⇒
+      logger.debug("Serializing.....")
+      GreetingMessage(g.message).toByteArray
+    case _ ⇒
+      throw new IllegalArgumentException(s"Can't serialize object of type ${obj.getClass} in [${getClass.getName}]")
+  }
+
+  override def fromBinary(bytes: Array[Byte], manifest: String): AnyRef = {
     manifest match {
-      case GreetingManifest =>
+      case GreetingManifest ⇒
+        logger.debug("Deserializing.....")
       val message = GreetingMessage.parseFrom(bytes)
       Greeting(message.msg)
-      case _ => throw new IllegalArgumentException(
-          s"Unable to deserialize from bytes, manifest was: $manifest! Bytes length: " + bytes.length)
+      case _ ⇒ throw new NotSerializableException(
+        s"Unimplemented deserialization of message with manifest [$manifest] in [${getClass.getName}")
     }
   }
 
