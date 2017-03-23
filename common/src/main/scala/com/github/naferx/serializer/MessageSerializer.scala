@@ -12,7 +12,7 @@ import com.github.naferx.messages.GreetingMessage
 final class MessageSerializer(actorSystem: ExtendedActorSystem) extends SerializerWithStringManifest {
   import Messages._
 
-  private val logger = Logging.getLogger(actorSystem, this)
+  private[this] val logger = Logging.getLogger(actorSystem, this)
 
   private val GreetingManifest = "G"
 

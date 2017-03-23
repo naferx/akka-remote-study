@@ -3,7 +3,7 @@ import sbt.Keys._
 
 name := "sbt-study"
 
-val akkaVersion = "2.4.17"
+val akkaVersion = "2.5.0-RC1"
 
 lazy val dependencies = Seq(
   // akka
