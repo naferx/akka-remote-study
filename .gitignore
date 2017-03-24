@@ -31,3 +31,5 @@ project/target/
 hs_err_pid*
 .ensime_cache/
 .ensime
+/.ensime_cache/
+/.ensime

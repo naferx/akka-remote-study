@@ -9,10 +9,10 @@ import akka.serialization.SerializerWithStringManifest
 import com.github.naferx.messages.Messages
 import com.github.naferx.messages.GreetingMessage
 
-final class MessageSerializer(actorSystem: ExtendedActorSystem) extends SerializerWithStringManifest {
+final class MessageSerializer(system: ExtendedActorSystem) extends SerializerWithStringManifest {
   import Messages._
 
-  private[this] val logger = Logging.getLogger(actorSystem, this)
+  private[this] val logger = Logging(system, this)
 
   private val GreetingManifest = "G"
 
