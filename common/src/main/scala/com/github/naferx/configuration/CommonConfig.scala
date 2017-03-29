@@ -1,8 +1,8 @@
 
 package com.github.naferx.configuration
 
-import com.typesafe.config.ConfigFactory
+import com.typesafe.config.{Config, ConfigFactory}
 
 object CommonConfig {
-  lazy val defaultConfig = ConfigFactory.load("messages.conf")
+  val defaultConfig: Config = ConfigFactory.load("messages.conf")
 }

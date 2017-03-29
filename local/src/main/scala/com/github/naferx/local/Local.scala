@@ -18,8 +18,6 @@ object Local extends App {
   localActor ! "START"                                                     // start the action
 
   val localActor2 = system.actorOf(Props[LocalActor])  // the local actor
-
-
 }
 
 class LocalActor extends Actor {
