@@ -14,7 +14,7 @@ lazy val dependencies = Seq(
   // utils
   "ch.qos.logback"       %    "logback-classic"     %   "1.1.7",
 
-  "org.scalatest"        %%   "scalatest"           %   "3.0.0" % "test"
+  "org.scalatest"        %%   "scalatest"           %   "3.0.0" % Test
 )
 
 lazy val commonSettings = Seq(
