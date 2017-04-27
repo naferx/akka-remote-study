@@ -12,7 +12,7 @@ import com.github.naferx.messages.GreetingMessage
 final class MessageSerializer(system: ExtendedActorSystem) extends SerializerWithStringManifest {
   import Messages._
 
-  private[this] val logger = Logging(system, this)
+ // private[this] val logger = Logging(system, this)
 
   private val GreetingManifest = "G"
 
@@ -26,7 +26,7 @@ final class MessageSerializer(system: ExtendedActorSystem) extends SerializerWit
 
   override def toBinary(obj: AnyRef): Array[Byte] = obj match {
     case g: Greeting ⇒
-      logger.debug("Serializing.....")
+     // logger.debug("Serializing.....")
       GreetingMessage(g.message).toByteArray
     case _ ⇒
       throw new IllegalArgumentException(s"Can't serialize object of type ${obj.getClass} in [${getClass.getName}]")
@@ -35,7 +35,7 @@ final class MessageSerializer(system: ExtendedActorSystem) extends SerializerWit
   override def fromBinary(bytes: Array[Byte], manifest: String): AnyRef = {
     manifest match {
       case GreetingManifest ⇒
-        logger.debug("Deserializing.....")
+      //  logger.debug("Deserializing.....")
       val message = GreetingMessage.parseFrom(bytes)
       Greeting(message.msg)
       case _ ⇒ throw new NotSerializableException(
